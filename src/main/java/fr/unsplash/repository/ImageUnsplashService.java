@@ -20,4 +20,17 @@ public class ImageUnsplashService implements IImageUnsplashService{
     public List<ImageUnsplash> getImages() {
         return dao.findAll();
     }
+
+    @Override
+    public List<ImageUnsplash> getImagesByLabel(String label) {
+        return dao.searchByLabel(label);
+    }
+
+    @Override
+    public boolean deleteById(Long id) {
+        long nbLinesRemoved = dao.deleteImageById(id);
+        return nbLinesRemoved != 0;
+    }
+
+
 }

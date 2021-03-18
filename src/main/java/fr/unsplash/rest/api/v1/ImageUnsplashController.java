@@ -5,7 +5,9 @@ import fr.unsplash.repository.ImageUnsplashService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -23,18 +25,33 @@ public class ImageUnsplashController {
         this.imageUnsplashService = imageUnsplashService;
     }
 
-    @GetMapping(value = "getImages")
+    @GetMapping(value = "/image")
     @ResponseBody
     public List<ImageUnsplash> getImages() {
-
         LOGGER.info("Attempt to retrieve images");
-
        return imageUnsplashService.getImages();
     }
 
-    @GetMapping(value = "info")
+    @GetMapping(value = "/image/search")
     @ResponseBody
-    public String getInfo() {
-        return "info";
+    public List<ImageUnsplash> getImages(@RequestParam String label) {
+        return imageUnsplashService.getImagesByLabel(label);
+    }
+
+
+    @DeleteMapping(value = "/image/{id}")
+    public ResponseEntity<Long> deletePost(@PathVariable Long id) {
+        var isRemoved = imageUnsplashService.deleteById(id);
+
+        if (!isRemoved) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<>(id, HttpStatus.OK);
+    }
+
+    @PostMapping(value = "/image")
+    @ResponseStatus(HttpStatus.CREATED)
+    public ImageUnsplash createImage(@RequestBody ImageUnsplash imageUnsplash) {
+        return imageUnsplashService.create(imageUnsplash);
     }
 }

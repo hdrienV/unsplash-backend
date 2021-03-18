@@ -29,3 +29,11 @@ databaseChangeLog:
                   type: text
                   constraints:
                     nullable: false
+
+  - changeSet:
+      id: create-table-image_unsplash-index_tsvector
+      author: hver
+      changes:
+        - sql:  ALTER TABLE image_unsplash ADD "document_vectors" tsvector;
+                CREATE INDEX idx_fts_doc_vec ON image_unsplash USING gin(document_vectors);
+                UPDATE image_unsplash SET document_vectors = to_tsvector(label) ;
