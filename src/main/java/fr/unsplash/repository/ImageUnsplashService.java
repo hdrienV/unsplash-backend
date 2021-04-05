@@ -28,7 +28,7 @@ public class ImageUnsplashService implements IImageUnsplashService{
 
     @Override
     public boolean deleteById(Long id) {
-        long nbLinesRemoved = dao.deleteImageById(id);
+        int nbLinesRemoved = dao.deleteImageById(id);
         return nbLinesRemoved != 0;
     }
 
