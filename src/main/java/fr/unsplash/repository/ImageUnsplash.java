@@ -17,7 +17,7 @@ import java.time.LocalDateTime;
 @JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY)
 public class ImageUnsplash {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @JsonProperty("id")
     private Long id;
 
@@ -31,43 +31,10 @@ public class ImageUnsplash {
     @JsonProperty("url")
     private String url;
 
-    public ImageUnsplash() {
-    }
-
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    @NonNull
-    public String getLabel() {
-        return label;
-    }
-
-    public void setLabel(@NonNull String label) {
-        this.label = label;
-    }
-
-    @NonNull
-    public LocalDateTime getCreationDate() {
-        return creationDate;
-    }
-
     public void setCreationDate(@NonNull LocalDateTime creationDate) {
         this.creationDate = creationDate;
     }
 
-    public String getUrl() {
-        return url;
-    }
-
-    public void setUrl(String url) {
-        this.url = url;
-    }
 
     @Override
     public boolean equals(Object o) {
